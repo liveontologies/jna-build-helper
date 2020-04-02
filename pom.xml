@@ -1,0 +1,202 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<artifactId>jna-build-helper</artifactId>
+	<groupId>com.github.liveontologies</groupId>
+	<version>0.1.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<name>JNA build helper</name>
+
+	<description>Helps building and packaging of shared native libraries to be used with the Java Native Access (JNA) library.</description>
+
+	<modules>
+		<module>jna-descriptors</module>
+	</modules>
+
+	<scm>
+		<connection>scm:git:https://github.com/liveontologies/${project.artifactId}.git</connection>
+		<developerConnection>scm:git:git@github.com:liveontologies/${project.artifactId}.git</developerConnection>
+		<url>https://github.com/liveontologies/${project.artifactId}</url>
+		<tag>HEAD</tag>
+	</scm>
+
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<organization>
+		<name>Live Ontologies Project</name>
+		<url>https://github.com/liveontologies</url>
+	</organization>
+
+	<inceptionYear>2020</inceptionYear>
+
+	<developers>
+		<developer>
+			<id>yevgeny</id>
+			<name>Yevgeny Kazakov</name>
+			<email>yevgeny.kazakov@uni-ulm.de</email>
+			<organization>Institute of Artificial Intelligence, University of Ulm</organization>
+			<organizationUrl>http://www.uni-ulm.de/en/in/ki.html</organizationUrl>
+			<roles>
+				<role>developer</role>
+			</roles>
+			<timezone>1</timezone>
+		</developer>
+	</developers>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<!-- the location of files sources necessary for the native build -->
+		<native.dir>${basedir}/src/main/native</native.dir>
+		<!-- The directory in which build will take place -->
+		<build.dir>${build.directory}/native/</build.dir>
+	</properties>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<!-- A template to copy all files to the configured build directory. 
+						The resulting native library shall be created in the root of this directory. -->
+					<artifactId>maven-resources-plugin</artifactId>
+					<version>3.1.0</version>
+					<executions>
+						<execution>
+							<id>copy-native-resources</id>
+							<goals>
+								<goal>copy-resources</goal>
+							</goals>
+							<configuration>
+								<resources>
+									<resource>
+										<directory>${native.dir}</directory>
+									</resource>
+								</resources>
+								<!-- the directory where to copy, should be configured by the profile 
+									for the specific build tool (see below) -->
+								<outputDirectory>${build.dir}</outputDirectory>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<!-- The plugin used to execute builds. -->
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>exec-maven-plugin</artifactId>
+					<version>1.6.0</version>
+				</plugin>
+				<plugin>
+					<!-- Filter the libraries for the target platform and zip them under 
+						the sub-folder ${jna.os.prefix} of the zip file so that JNA finds them -->
+					<artifactId>maven-assembly-plugin</artifactId>
+					<version>3.2.0</version>
+					<dependencies>
+						<dependency>
+							<groupId>${project.groupId}</groupId>
+							<artifactId>jna-descriptors</artifactId>
+							<version>${project.version}</version>
+						</dependency>
+					</dependencies>
+					<configuration>
+						<descriptorRefs>
+							<descriptorRef>${jna.os.prefix}</descriptorRef>
+						</descriptorRefs>
+					</configuration>
+					<executions>
+						<execution>
+							<id>make-assembly</id>
+							<phase>package</phase>
+							<goals>
+								<goal>single</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
+	<profiles>
+		<!-- Profiles to setup the build for the appropriate platform. -->
+		<profile>
+			<id>darwin</id>
+			<activation>
+				<os>
+					<family>mac</family>
+				</os>
+			</activation>
+			<properties>
+				<jna.os.prefix>darwin</jna.os.prefix>
+			</properties>
+		</profile>
+		<profile>
+			<id>linux-x86-64</id>
+			<activation>
+				<os>
+					<name>linux</name>
+					<arch>amd64</arch>
+				</os>
+			</activation>
+			<properties>
+				<jna.os.prefix>linux-x86-64</jna.os.prefix>
+			</properties>
+		</profile>
+		<!-- Profiles for building native libraries. -->
+		<profile>
+			<!-- Building a native library using the GNU make utility. -->
+			<id>make</id>
+			<activation>
+				<file>
+					<!-- This profile will be activated if the makefile is found in the 
+						directory with the native source files -->
+					<exists>${native.dir}/makefile</exists>
+				</file>
+			</activation>
+			<build>
+				<plugins>
+					<!-- copy resources to the build directory -->
+					<plugin>
+						<artifactId>maven-resources-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>copy-native-resources</id>
+								<phase>compile</phase>
+							</execution>
+						</executions>
+					</plugin>
+					<!-- execute the make -->
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>exec-maven-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>make</id>
+								<goals>
+									<goal>exec</goal>
+								</goals>
+								<phase>compile</phase>
+								<configuration>
+									<executable>make</executable>
+									<workingDirectory>${build.dir}</workingDirectory>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+					<!-- copy the libraries to the zip file -->
+					<plugin>
+						<artifactId>maven-assembly-plugin</artifactId>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+
+</project>
