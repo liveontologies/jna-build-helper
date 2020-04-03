@@ -200,10 +200,10 @@
 	</profiles>
 
 	<distributionManagement>
-		<snapshotRepository>
+		<repository>
 			<id>github</id>
-			<name>GitHub LiveOntologies Snapshot Repository</name>
-			<url>https://maven.pkg.github.com/liveontologies/snapshots</url>
-		</snapshotRepository>
+			<name>GitHub Repository</name>
+			<url>https://maven.pkg.github.com/liveontologies/jna-build-helper</url>
+		</repository>
 	</distributionManagement>
 </project>
