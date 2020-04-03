@@ -57,7 +57,7 @@
 		<!-- the location of files sources necessary for the native build -->
 		<native.dir>${basedir}/src/main/native</native.dir>
 		<!-- The directory in which build will take place -->
-		<build.dir>${build.directory}/native/</build.dir>
+		<build.dir>${project.build.directory}/native/</build.dir>
 	</properties>
 
 	<build>
