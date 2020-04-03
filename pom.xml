@@ -200,10 +200,10 @@
 	</profiles>
 
 	<distributionManagement>
-		<repository>
-			<id>github</id>
-			<name>GitHub Repository</name>
-			<url>https://maven.pkg.github.com/liveontologies/jna-build-helper</url>
-		</repository>
+		<snapshotRepository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+		</snapshotRepository>
 	</distributionManagement>
+
 </project>
