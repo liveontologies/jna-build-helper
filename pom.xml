@@ -199,4 +199,11 @@
 		</profile>
 	</profiles>
 
+	<distributionManagement>
+		<snapshotRepository>
+			<id>github</id>
+			<name>GitHub LiveOntologies Snapshot Repository</name>
+			<url>https://maven.pkg.github.com/liveontologies/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
 </project>
