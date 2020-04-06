@@ -149,6 +149,21 @@
 				<jna.os.prefix>linux-x86-64</jna.os.prefix>
 			</properties>
 		</profile>
+		<!-- mingw32 cross-copiler -->
+		<profile>
+			<id>i686-w64-mingw32</id>
+			<properties>
+				<jna.os.prefix>win32-x86</jna.os.prefix>
+				<chost>i686-w64-mingw32</chost>
+			</properties>
+		</profile>
+		<profile>
+			<id>x86_64-w64-mingw32</id>
+			<properties>
+				<jna.os.prefix>win32-x86-64</jna.os.prefix>
+				<chost>x86_64-w64-mingw32</chost>
+			</properties>
+		</profile>
 		<!-- Profiles for building native libraries. -->
 		<profile>
 			<!-- Building a native library using the GNU make utility. -->
@@ -186,6 +201,9 @@
 								<configuration>
 									<executable>make</executable>
 									<workingDirectory>${build.dir}</workingDirectory>
+									<environmentVariables>
+										<CHOST>${chost}</CHOST>
+									</environmentVariables>
 								</configuration>
 							</execution>
 						</executions>
