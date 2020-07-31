@@ -75,9 +75,19 @@
 								<goal>copy-resources</goal>
 							</goals>
 							<configuration>
+								<nonFilteredFileExtensions>
+									<nonFilteredFileExtension>c</nonFilteredFileExtension>
+									<nonFilteredFileExtension>cpp</nonFilteredFileExtension>
+									<nonFilteredFileExtension>h</nonFilteredFileExtension>
+									<nonFilteredFileExtension>hpp</nonFilteredFileExtension>
+									<nonFilteredFileExtension>gz</nonFilteredFileExtension>
+									<nonFilteredFileExtension>tar</nonFilteredFileExtension>
+									<nonFilteredFileExtension>patch</nonFilteredFileExtension>
+								</nonFilteredFileExtensions>
 								<resources>
 									<resource>
 										<directory>${native.dir}</directory>
+										<filtering>true</filtering>
 									</resource>
 								</resources>
 								<!-- the directory where to copy, should be configured by the profile 
@@ -100,9 +110,9 @@
 					<version>3.2.0</version>
 					<dependencies>
 						<dependency>
-							<groupId>${project.groupId}</groupId>
+							<groupId>com.github.liveontologies</groupId>
 							<artifactId>jna-descriptors</artifactId>
-							<version>${project.version}</version>
+							<version>0.1.0-SNAPSHOT</version>
 						</dependency>
 					</dependencies>
 					<configuration>
