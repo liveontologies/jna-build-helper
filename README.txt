@@ -22,7 +22,7 @@ To use from a Maven module:
    folder.
    
 If done this way, then "mvn install" should compile the shared library, put it
-in a folder corresponding the JNA prefix {OS}-{ARCH} (e.g., linux-amd64, or
+in a folder corresponding the JNA prefix {OS}-{ARCH} (e.g., linux-x86-64, or
 darwin, or win32-x86) defined by JNA (see
 https://github.com/java-native-access/jna/blob/master/www/GettingStarted.md) and
 packages it in a zip file. This zip file can be used from other Maven project
