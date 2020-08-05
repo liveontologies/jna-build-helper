@@ -11,4 +11,18 @@
 		</server>
 	</servers>
 
+	<profiles>
+		<profile>
+			<id>ossrh</id>
+			<properties>
+				<altSnapshotDeploymentRepository>ossrh::default::https://oss.sonatype.org/content/repositories/snapshots</altSnapshotDeploymentRepository>
+				<altReleaseDeploymentRepository>ossrh::default::https://oss.sonatype.org/service/local/staging/deploy/maven2/</altReleaseDeploymentRepository>
+			</properties>
+		</profile>
+	</profiles>
+
+	<activeProfiles>
+		<activeProfile>ossrh</activeProfile>
+	</activeProfiles>
+
 </settings>
