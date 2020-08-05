@@ -163,6 +163,30 @@
 				<jna.os.prefix>linux-x86-64</jna.os.prefix>
 			</properties>
 		</profile>
+		<profile>
+			<id>win32-x86-64</id>
+			<activation>
+				<os>
+					<family>windows</family>
+					<arch>x86-64</arch>
+				</os>
+			</activation>
+			<properties>
+				<jna.os.prefix>win32-x86-64</jna.os.prefix>
+			</properties>
+		</profile>
+		<profile>
+			<id>win32-x86</id>
+			<activation>
+				<os>
+					<family>windows</family>
+					<arch>x86</arch>
+				</os>
+			</activation>
+			<properties>
+				<jna.os.prefix>win32-x86</jna.os.prefix>
+			</properties>
+		</profile>
 		<!-- mingw32 cross-copiler -->
 		<profile>
 			<id>i686-w64-mingw32</id>
