@@ -246,7 +246,7 @@
 							</execution>
 						</executions>
 					</plugin>
-					<!-- copy the libraries to the zip file -->
+					<!-- copy the libraries to the jar file -->
 					<plugin>
 						<artifactId>maven-assembly-plugin</artifactId>
 					</plugin>
