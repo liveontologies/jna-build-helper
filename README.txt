@@ -25,7 +25,7 @@ If done this way, then "mvn install" should compile the shared library, put it
 in a folder corresponding the JNA prefix {OS}-{ARCH} (e.g., linux-x86-64, or
 darwin, or win32-x86) defined by JNA (see
 https://github.com/java-native-access/jna/blob/master/www/GettingStarted.md) and
-packages it in a zip file. This zip file can be used from other Maven project
+packages it in a jar file. This jar file can be used from other Maven project
 using a dependency with <groupId>, <artifiactId>, and <version> as defined for
-this module, plus <type>zip</type> and <qualifier>[prefix]<\qualifier>, where
-[prefix] is the JNA prefix for the corresponding platform (see above).
+this module and <qualifier>[prefix]<\qualifier>, where [prefix] is the JNA 
+prefix for the corresponding platform (see above).
