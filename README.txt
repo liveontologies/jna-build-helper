@@ -7,7 +7,7 @@ To use from a Maven module:
 
 1. Declare the parent of the module in pom.xml as follows:
 	<parent>
-		<groupId>com.github.liveontologies</groupId>
+		<groupId>io.github.liveontologies</groupId>
 		<artifactId>jna-build-helper</artifactId>
 		<version>...</version>
 	</parent>

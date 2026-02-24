@@ -4,21 +4,24 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<artifactId>jna-build-helper</artifactId>
-	<groupId>com.github.liveontologies</groupId>
+	<groupId>io.github.liveontologies</groupId>
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>JNA build helper</name>
 
-	<description>Helps building and packaging of shared native libraries to be used with the Java Native Access (JNA) library.</description>
+	<description>Helps building and packaging of shared native libraries to be
+		used with the Java Native Access (JNA) library.</description>
 
 	<modules>
 		<module>jna-descriptors</module>
 	</modules>
 
 	<scm>
-		<connection>scm:git:https://github.com/liveontologies/${project.artifactId}.git</connection>
-		<developerConnection>scm:git:git@github.com:liveontologies/${project.artifactId}.git</developerConnection>
+		<connection>
+			scm:git:https://github.com/liveontologies/${project.artifactId}.git</connection>
+		<developerConnection>
+			scm:git:git@github.com:liveontologies/${project.artifactId}.git</developerConnection>
 		<url>https://github.com/liveontologies/${project.artifactId}</url>
 		<tag>HEAD</tag>
 	</scm>
@@ -43,7 +46,8 @@
 			<id>yevgeny</id>
 			<name>Yevgeny Kazakov</name>
 			<email>yevgeny.kazakov@uni-ulm.de</email>
-			<organization>Institute of Artificial Intelligence, University of Ulm</organization>
+			<organization>Institute of Artificial Intelligence, University of
+				Ulm</organization>
 			<organizationUrl>http://www.uni-ulm.de/en/in/ki.html</organizationUrl>
 			<roles>
 				<role>developer</role>
@@ -64,7 +68,8 @@
 		<pluginManagement>
 			<plugins>
 				<plugin>
-					<!-- A template to copy all files to the configured build directory. 
+					<!-- A template to copy all files to the configured build
+					directory. 
 						The resulting native library shall be created in the root of this directory. -->
 					<artifactId>maven-resources-plugin</artifactId>
 					<version>3.3.1</version>
@@ -90,7 +95,8 @@
 										<filtering>true</filtering>
 									</resource>
 								</resources>
-								<!-- the directory where to copy, should be configured by the profile 
+								<!-- the directory where to copy, should be
+								configured by the profile 
 									for the specific build tool (see below) -->
 								<outputDirectory>${build.dir}</outputDirectory>
 							</configuration>
@@ -104,13 +110,14 @@
 					<version>3.3.0</version>
 				</plugin>
 				<plugin>
-					<!-- Filter the libraries for the target platform and zip them under 
+					<!-- Filter the libraries for the target platform and zip
+					them under 
 						the sub-folder ${jna.os.prefix} of the zip file so that JNA finds them -->
 					<artifactId>maven-assembly-plugin</artifactId>
 					<version>3.7.1</version>
 					<dependencies>
 						<dependency>
-							<groupId>com.github.liveontologies</groupId>
+							<groupId>io.github.liveontologies</groupId>
 							<artifactId>jna-descriptors</artifactId>
 							<version>1.0.0-SNAPSHOT</version>
 						</dependency>
@@ -156,6 +163,16 @@
 						</configuration>
 					</execution>
 				</executions>
+			</plugin>
+			<!-- deploying snapshots and releases to maven central -->
+			<plugin>
+				<groupId>org.sonatype.central</groupId>
+				<artifactId>central-publishing-maven-plugin</artifactId>
+				<version>0.10.0</version>
+				<extensions>true</extensions>
+				<configuration>
+					<publishingServerId>central</publishingServerId>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
@@ -230,7 +247,8 @@
 			<id>make</id>
 			<activation>
 				<file>
-					<!-- This profile will be activated if the makefile is found in the 
+					<!-- This profile will be activated if the makefile is found
+					in the 
 						directory with the native source files -->
 					<exists>${native.dir}/makefile</exists>
 				</file>
